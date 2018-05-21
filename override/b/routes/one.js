@@ -3,5 +3,10 @@
 module.exports = {
     method: 'get',
     path: '/one',
-    handler: () => 'one-by-b'
+    handler: async (request, h) => {
+
+        const { Users } = request.models(true);
+// console.log(request.models(true));
+        return await Users.query();
+    }
 };
