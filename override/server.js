@@ -13,23 +13,23 @@ const Schwifty = require('schwifty');
             request: ['error', 'implementation', 'internal']
         }
     });
-
+    await server.register({
+        plugin: Schwifty,
+        options: {
+            knex: {
+                client: 'pg',
+                useNullAsDefault: true,
+                connection: {
+                    host: 'localhost',
+                    user: 'nearpeer',
+                    password: 'Cqn2xduKGBQE',
+                    database: 'user-v17'
+                }
+            }
+        }
+    });
     await server.register(require('./c'));
-    // await server.register({
-    //     plugin: Schwifty,
-    //     options: {
-    //         knex: {
-    //             client: 'pg',
-    //             useNullAsDefault: true,
-    //             connection: {
-    //                 host: 'localhost',
-    //                 user: 'nearpeer',
-    //                 password: 'Cqn2xduKGBQE',
-    //                 database: 'user-v17'
-    //             }
-    //         }
-    //     }
-    // });
+
     await server.start();
 
     console.log(`Started server ${server.info.uri}`);
