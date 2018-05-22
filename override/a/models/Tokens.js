@@ -4,12 +4,14 @@ const Model = require('schwifty').Model;
 const Joi = require('joi');
 const Uuid = require('uuid/v4');
 
-// module.exports = (server) => {
+module.exports = (server) => {
 
-    // return class Tokens extends Model {
-const tokenClass = class Tokens extends Model {
+    return class Tokens extends Model {
 
-        static get tableName() { return 'Tokens'; } // eslint-disable-line
+        static get tableName() {
+
+            return 'Tokens';
+        } // eslint-disable-line
 
         static get joiSchema() {
 
@@ -31,7 +33,7 @@ const tokenClass = class Tokens extends Model {
             return {
                 user: {
                     relation: Model.BelongsToOneRelation,
-                    modelClass: require('./Users'),
+                    modelClass: server.models(true).Users,
                     join: {
                         from: 'Tokens.userId',
                         to: 'Users.id'
@@ -40,11 +42,17 @@ const tokenClass = class Tokens extends Model {
             };
         }
 
+        $formatJson(json) {
+
+            json = super.$formatJson(json);
+            console.log('formatjson in a tokens');
+
+            return json;
+        }
+
         $beforeInsert() {
 
             this.createdAt = new Date().toISOString();
         }
-    // }
+    }
 };
-console.log('tc',tokenClass);
-module.exports = tokenClass;

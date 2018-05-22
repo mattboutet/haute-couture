@@ -6,10 +6,8 @@ const Joi = require('joi');
 module.exports = (server) => {
 
     return class Users extends Model {
-// module.exports = class Users extends Model {
 
         static get tableName() {
-    // console.log('table name in b');
             return 'Users';
         }
 
@@ -33,8 +31,7 @@ module.exports = (server) => {
             return {
                 tokens: {
                     relation: Model.HasManyRelation,
-                    modelClass: require('./Tokens'),
-                    // modelClass: server.models().Tokens,
+                    modelClass: server.models(true).Tokens,
                     join: {
                         from: 'Users.id',
                         to: 'Tokens.userId'
